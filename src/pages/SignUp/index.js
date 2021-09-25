@@ -1,5 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Keyboard } from 'react-native';
 import {
   TouchableWithoutFeedback,
@@ -10,21 +9,26 @@ import {
   Input,
   SubmitButton,
   SubmitText,
-  Link,
-  LinkText,
-} from './styles';
+} from '../SignIn/styles';
 
-export default function SignIn() {
+export default function SignUp() {
+  const [ nome, setNome ] = useState('')
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
-
-  const navigation = useNavigation();
 
   return (
     <TouchableWithoutFeedback onPress={ () => Keyboard.dismiss() }>
       <Background>
         <Container>
-          <Logo source={ require('../../assets/Logo.png') } />
+
+          <AreaInput>
+            <Input
+              placeholder='Nome'
+              autoCorrect={ false }
+              value={ nome }
+              onChangeText={ (text) => setNome(text) }
+            />
+          </AreaInput>
 
           <AreaInput>
             <Input
@@ -47,12 +51,8 @@ export default function SignIn() {
           </AreaInput>
 
           <SubmitButton>
-            <SubmitText>Acessar</SubmitText>
+            <SubmitText>Cadastrar</SubmitText>
           </SubmitButton>
-
-          <Link onPress={ () => navigation.navigate('SignUp') }>
-            <LinkText>Criar uma conta</LinkText>
-          </Link>
 
         </Container>
       </Background>
