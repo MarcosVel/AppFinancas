@@ -1,10 +1,23 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import firebase from '../services/firebaseConnection';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AuthContext = createContext({});
 
 function AuthProvider({ children }) {
   const [ user, setUser ] = useState(null);
+
+  useEffect(() => {
+    async function loadStorage() {
+      const storageUser = await AsyncStorage.getItem('Auth_user');
+
+      if (storageUser) {
+        setUser(JSON.parse(storageUser));
+      }
+    }
+
+    loadStorage();
+  }, [])
 
   // cadastrar usuário
   async function signUp(email, password, nome) {
@@ -23,6 +36,7 @@ function AuthProvider({ children }) {
             };
 
             setUser(data);
+            storageUser(data); // não ficar deslogando após entrar
           })
       })
       .catch((error) => {
@@ -44,11 +58,16 @@ function AuthProvider({ children }) {
             };
 
             setUser(data);
+            storageUser(data); // não ficar deslogando após entrar
           })
       })
       .catch((error) => {
         alert(error.code);
       })
+  }
+
+  async function storageUser(data) {
+    await AsyncStorage.setItem('Auth_user', JSON.stringify(data)); // não pode passar objeto, só string, então transforma o data
   }
 
   return (
