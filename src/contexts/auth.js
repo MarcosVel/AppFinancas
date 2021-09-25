@@ -6,6 +6,7 @@ export const AuthContext = createContext({});
 
 function AuthProvider({ children }) {
   const [ user, setUser ] = useState(null);
+  const [ loading, setLoading ] = useState(true);
 
   useEffect(() => {
     async function loadStorage() {
@@ -13,7 +14,10 @@ function AuthProvider({ children }) {
 
       if (storageUser) {
         setUser(JSON.parse(storageUser));
+        setLoading(false);
       }
+
+      setLoading(false);
     }
 
     loadStorage();
@@ -72,7 +76,7 @@ function AuthProvider({ children }) {
 
   return (
     // !!user converte o null em boolean, se não tiver usuário = false, se tiver = true
-    <AuthContext.Provider value={ { signed: !!user, user, signUp, signIn } }>
+    <AuthContext.Provider value={ { signed: !!user, user, signUp, signIn, loading } }>
       { children }
     </AuthContext.Provider>
   );
