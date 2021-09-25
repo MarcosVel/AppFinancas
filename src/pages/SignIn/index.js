@@ -20,9 +20,10 @@ export default function SignIn() {
   const [ password, setPassword ] = useState('')
 
   const navigation = useNavigation();
+  const { signIn } = useContext(AuthContext);
 
   function handleLogin() {
-    
+    signIn(email, password);
   }
 
   return (

@@ -21,14 +21,39 @@ function AuthProvider({ children }) {
               nome: nome,
               email: value.user.email,
             };
+
             setUser(data);
           })
+      })
+      .catch((error) => {
+        alert(error.code);
+      })
+  }
+
+  // login
+  async function signIn(email, password) {
+    await firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(async (value) => {
+        let uid = value.user.uid;
+        await firebase.database().ref('users').child(uid).once('value')
+          .then((snapshot) => {
+            let data = {
+              uid: uid,
+              nome: snapshot.val().nome,
+              email: value.user.email,
+            };
+
+            setUser(data);
+          })
+      })
+      .catch((error) => {
+        alert(error.code);
       })
   }
 
   return (
     // !!user converte o null em boolean, se não tiver usuário = false, se tiver = true
-    <AuthContext.Provider value={ { signed: !!user, user, signUp } }>
+    <AuthContext.Provider value={ { signed: !!user, user, signUp, signIn } }>
       { children }
     </AuthContext.Provider>
   );
