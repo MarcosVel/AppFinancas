@@ -6,9 +6,11 @@ import Home from '../pages/Home';
 const AppStack = createStackNavigator();
 
 function AppRoutes() {
-  <AppStack.Navigator>
-    <AppStack.Screen name='Home' component={ Home } />
-  </AppStack.Navigator>
+  return (
+    <AppStack.Navigator>
+      <AppStack.Screen name='Home' component={ Home } />
+    </AppStack.Navigator>
+  )
 }
 
 export default AppRoutes;
