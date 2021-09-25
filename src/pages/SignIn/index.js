@@ -20,10 +20,9 @@ export default function SignIn() {
   const [ password, setPassword ] = useState('')
 
   const navigation = useNavigation();
-  const { user } = useContext(AuthContext); // pegar dados de dentro do objeto usuário
 
   function handleLogin() {
-    console.log(user.nome);
+    
   }
 
   return (
