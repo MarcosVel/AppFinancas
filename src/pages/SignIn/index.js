@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Keyboard } from 'react-native';
+import { AuthContext } from '../../contexts/auth';
 import {
   TouchableWithoutFeedback,
   Background,
@@ -19,6 +20,11 @@ export default function SignIn() {
   const [ password, setPassword ] = useState('')
 
   const navigation = useNavigation();
+  const { user } = useContext(AuthContext); // pegar dados de dentro do objeto usuário
+
+  function handleLogin() {
+    console.log(user.nome);
+  }
 
   return (
     <TouchableWithoutFeedback onPress={ () => Keyboard.dismiss() }>
@@ -46,7 +52,7 @@ export default function SignIn() {
             />
           </AreaInput>
 
-          <SubmitButton>
+          <SubmitButton onPress={ handleLogin }>
             <SubmitText>Acessar</SubmitText>
           </SubmitButton>
 

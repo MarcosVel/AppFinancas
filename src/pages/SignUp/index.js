@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Keyboard } from 'react-native';
+import { AuthContext } from '../../contexts/auth';
 import {
   TouchableWithoutFeedback,
   Background,
@@ -15,6 +16,8 @@ export default function SignUp() {
   const [ nome, setNome ] = useState('')
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
+
+  const { user } = useContext(AuthContext);
 
   return (
     <TouchableWithoutFeedback onPress={ () => Keyboard.dismiss() }>
