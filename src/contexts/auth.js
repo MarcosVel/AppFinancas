@@ -74,9 +74,17 @@ function AuthProvider({ children }) {
     await AsyncStorage.setItem('Auth_user', JSON.stringify(data)); // não pode passar objeto, só string, então transforma o data
   }
 
+  async function signOut() {
+    await firebase.auth().signOut();
+    await AsyncStorage.clear()
+      .then(() => {
+        setUser(null);
+      })
+  }
+
   return (
     // !!user converte o null em boolean, se não tiver usuário = false, se tiver = true
-    <AuthContext.Provider value={ { signed: !!user, user, signUp, signIn, loading } }>
+    <AuthContext.Provider value={ { signed: !!user, user, signUp, signIn, loading, signOut } }>
       { children }
     </AuthContext.Provider>
   );
