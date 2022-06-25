@@ -1,7 +1,14 @@
-import React, { useContext } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../../contexts/auth';
-import { Container, Logout, LogoutText, NewLink, NewText, Nome } from './styles';
+import { useNavigation } from "@react-navigation/native";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/auth";
+import {
+  Container,
+  Logout,
+  LogoutText,
+  NewLink,
+  NewText,
+  Nome,
+} from "./styles";
 
 export default function Profile() {
   const { user, signOut } = useContext(AuthContext);
@@ -9,15 +16,15 @@ export default function Profile() {
 
   return (
     <Container>
-      <Nome>{ user?.nome }</Nome>
+      <Nome>{user?.nome}</Nome>
 
-      <NewLink onPress={ () => navigation.navigate('Registrar') }>
+      <NewLink onPress={() => navigation.navigate("Registrar")}>
         <NewText>Registrar gastos</NewText>
       </NewLink>
 
-      <Logout onPress={ () => signOut() }>
+      <Logout onPress={signOut}>
         <LogoutText>Sair</LogoutText>
       </Logout>
     </Container>
-  )
+  );
 }
