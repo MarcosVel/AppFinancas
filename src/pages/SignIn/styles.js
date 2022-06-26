@@ -5,7 +5,7 @@ export const TouchableWithoutFeedback = styled.TouchableWithoutFeedback``;
 
 export const Background = styled.View`
   flex: 1;
-  background-color: ${COLORS.black};
+  background-color: ${COLORS.blackSeven};
 `;
 
 export const Container = styled.KeyboardAvoidingView`
@@ -25,7 +25,7 @@ export const AreaInput = styled.View`
 export const Input = styled.TextInput.attrs({
   placeholderTextColor: `${COLORS.placeholder}`,
 })`
-  background: #000;
+  background: ${COLORS.black};
   width: 90%;
   font-size: 17px;
   color: ${COLORS.white};
