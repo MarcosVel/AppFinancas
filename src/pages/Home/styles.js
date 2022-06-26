@@ -3,8 +3,8 @@ import { COLORS } from "../../../styles";
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${ COLORS.blackSeven };
-  padding: 0 16px 24px;
+  background-color: ${COLORS.blackSeven};
+  padding: 0 16px;
 `;
 
 export const Name = styled.Text`
@@ -13,10 +13,10 @@ export const Name = styled.Text`
 `;
 
 export const Saldo = styled.Text`
-  margin-top: 8px;
-  font-size: 32px;
   color: ${COLORS.white};
+  font-size: 32px;
   font-weight: bold;
+  margin-top: 8px;
   margin-bottom: 24px;
 `;
 
@@ -24,3 +24,8 @@ export const Title = styled.Text`
   color: ${COLORS.green};
   margin-bottom: 12px;
 `;
+
+export const List = styled.FlatList.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: { paddingBottom: 80 },
+})``;
