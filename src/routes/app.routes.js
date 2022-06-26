@@ -1,4 +1,3 @@
-import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { COLORS } from "../../styles";
 
@@ -12,6 +11,10 @@ function AppRoutes() {
   return (
     <AppDrawer.Navigator
       screenOptions={{
+        headerTintColor: `${COLORS.white}`,
+        headerStyle: {
+          backgroundColor: `${COLORS.blackSeven}`,
+        },
         drawerStyle: {
           backgroundColor: `${COLORS.black}`,
         },
@@ -30,7 +33,9 @@ function AppRoutes() {
       <AppDrawer.Screen
         name="Home"
         component={Home}
-        // options={ { headerShown: false } }
+        options={{
+          headerTitle: "",
+        }}
       />
       <AppDrawer.Screen
         name="Registrar"
@@ -40,7 +45,9 @@ function AppRoutes() {
       <AppDrawer.Screen
         name="Perfil"
         component={Profile}
-        options={{ headerShown: false }}
+        options={{
+          headerTitle: "",
+        }}
       />
     </AppDrawer.Navigator>
   );

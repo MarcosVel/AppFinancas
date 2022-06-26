@@ -3,7 +3,7 @@ import { COLORS } from '../../../styles';
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${ COLORS.black };
+  background-color: ${ COLORS.blackSeven };
   align-items: center;
 `;
 
