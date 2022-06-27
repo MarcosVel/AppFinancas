@@ -28,6 +28,7 @@ export const AddButton = styled.TouchableOpacity`
   background-color: ${COLORS.green};
   margin-bottom: 16px;
 `;
+
 export const TextButton = styled.Text`
   font-size: 22px;
   color: ${COLORS.white};
