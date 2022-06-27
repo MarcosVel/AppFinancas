@@ -1,7 +1,9 @@
 import { useContext, useState } from "react";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import HistoryList from "../../components/HistoryList";
+import NewTransaction from "../../components/NewTransaction";
 import { AuthContext } from "../../contexts/auth";
-import { Container, List, Name, Saldo, Title } from "./styles";
+import { Container, Header, List, Name, Saldo, Title } from "./styles";
 
 export default function Home() {
   const { user } = useContext(AuthContext);
@@ -18,15 +20,27 @@ export default function Home() {
     { key: 10, type: "despesa", value: 53.26 },
   ]);
 
+  const FlatList_Header = () => {
+    return (
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <Header>
+          <Name>{user?.nome}</Name>
+          <Saldo>€ 123,00</Saldo>
+
+          <NewTransaction />
+
+          <Title>Últimas movimentações</Title>
+        </Header>
+      </TouchableWithoutFeedback>
+    );
+  };
+
   return (
     <Container>
-      <Name>{user?.nome}</Name>
-      <Saldo>€ 123,00</Saldo>
-      <Title>Últimas movimentações</Title>
-
       <List
         data={history}
         keyExtrator={item => item.key}
+        ListHeaderComponent={FlatList_Header}
         renderItem={({ item }) => <HistoryList data={item} />}
       />
     </Container>

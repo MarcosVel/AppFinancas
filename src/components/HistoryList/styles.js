@@ -3,7 +3,7 @@ import { COLORS } from "../../../styles";
 
 export const Container = styled.View`
   padding: 16px 16px 8px;
-  background-color:  ${COLORS.blackFive};
+  background-color: ${COLORS.blackFive};
   border-radius: 8px;
   margin-bottom: 8px;
 `;
