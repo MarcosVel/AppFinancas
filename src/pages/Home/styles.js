@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { COLORS } from "../../../styles";
 
 export const Container = styled.View`
+  flex: 1;
   background-color: ${COLORS.blackSeven};
   padding: 0 16px;
 `;
@@ -28,5 +29,8 @@ export const Title = styled.Text`
 
 export const List = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
-  contentContainerStyle: { paddingBottom: 80 },
+  contentContainerStyle: {
+    paddingBottom: 80,
+    flexDirection: "column-reverse",
+  },
 })``;
