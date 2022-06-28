@@ -24,6 +24,7 @@ export const Type = styled.View`
 export const TypeText = styled.Text`
   color: ${COLORS.white};
   font-size: 16px;
+  line-height: 20px;
   margin-left: 8px;
 `;
 
