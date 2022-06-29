@@ -1,6 +1,14 @@
 import styled from "styled-components";
 import { COLORS } from "../../../styles";
 
+export const Empty = styled.Text`
+  font-size: 22px;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 64px;
+  color: ${COLORS.white};
+`;
+
 export const Container = styled.View`
   flex: 1;
   background-color: ${COLORS.blackSeven};
