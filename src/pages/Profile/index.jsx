@@ -18,7 +18,7 @@ export default function Profile() {
     <Container>
       <Nome>{user?.nome}</Nome>
 
-      <NewLink onPress={() => navigation.navigate("Registrar")}>
+      <NewLink onPress={() => navigation.navigate("Home")}>
         <NewText>Registrar gastos</NewText>
       </NewLink>
 

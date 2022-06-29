@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useEffect, useState } from "react";
+import { ToastAndroid } from "react-native";
 import firebase from "../services/firebaseConnection";
 
 export const AuthContext = createContext({});
@@ -85,7 +86,7 @@ function AuthProvider({ children }) {
       })
       .catch(error => {
         setLoadingReq(false);
-        alert(error.code);
+        ToastAndroid.show(error.code, ToastAndroid.SHORT);
       });
   }
 
