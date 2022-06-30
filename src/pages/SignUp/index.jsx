@@ -1,11 +1,18 @@
+import { Feather } from "@expo/vector-icons";
 import { useContext, useState } from "react";
-import { ActivityIndicator, Keyboard, Platform } from "react-native";
+import {
+  ActivityIndicator,
+  Keyboard,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
 import { AuthContext } from "../../contexts/auth";
 import {
   AreaInput,
   Background,
   Container,
   Input,
+  PasswordInput,
   SubmitButton,
   SubmitText,
   TouchableWithoutFeedback,
@@ -16,10 +23,15 @@ export default function SignUp() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(true);
 
   function handleSignUp() {
     signUp(email, password, nome);
   }
+
+  const handleToggle = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -44,15 +56,23 @@ export default function SignUp() {
             />
           </AreaInput>
 
-          <AreaInput>
+          <PasswordInput>
             <Input
               placeholder="Senha"
               autoCorrect={false}
               autoCapitalize="none"
               value={password}
               onChangeText={text => setPassword(text)}
+              secureTextEntry={showPassword}
             />
-          </AreaInput>
+            <TouchableOpacity onPress={handleToggle}>
+              {showPassword ? (
+                <Feather name="eye" size={24} color="#606061" />
+              ) : (
+                <Feather name="eye-off" size={24} color="#606061" />
+              )}
+            </TouchableOpacity>
+          </PasswordInput>
 
           <SubmitButton onPress={handleSignUp}>
             {loadingReq ? (

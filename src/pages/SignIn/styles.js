@@ -15,11 +15,21 @@ export const Container = styled.KeyboardAvoidingView`
 `;
 
 export const Logo = styled.Image`
-  margin-bottom: 40px;
+  margin-bottom: 32px;
 `;
 
 export const AreaInput = styled.View`
   flex-direction: row;
+  margin-bottom: 16px;
+`;
+
+export const PasswordInput = styled.View`
+  flex-direction: row;
+  background: ${COLORS.black};
+  width: 90%;
+  align-items: center;
+  border-radius: 8px;
+  margin-bottom: 16px;
 `;
 
 export const Input = styled.TextInput.attrs({
@@ -29,7 +39,6 @@ export const Input = styled.TextInput.attrs({
   width: 90%;
   font-size: 17px;
   color: ${COLORS.white};
-  margin-bottom: 15px;
   padding: 10px 15px;
   border-radius: 8px;
 `;

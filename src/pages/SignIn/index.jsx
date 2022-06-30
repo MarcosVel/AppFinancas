@@ -1,6 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import { useContext, useState } from "react";
-import { ActivityIndicator, Keyboard, Platform } from "react-native";
+import {
+  ActivityIndicator,
+  Keyboard,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
 import { AuthContext } from "../../contexts/auth";
 import {
   AreaInput,
@@ -10,20 +15,27 @@ import {
   Link,
   LinkText,
   Logo,
+  PasswordInput,
   SubmitButton,
   SubmitText,
   TouchableWithoutFeedback,
 } from "./styles";
+import { Feather } from "@expo/vector-icons";
 
 export default function SignIn() {
   const navigation = useNavigation();
   const { signIn, loadingReq } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(true);
 
   function handleLogin() {
     signIn(email, password);
   }
+
+  const handleToggle = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -41,15 +53,23 @@ export default function SignIn() {
             />
           </AreaInput>
 
-          <AreaInput>
+          <PasswordInput>
             <Input
               placeholder="Senha"
               autoCorrect={false}
               autoCapitalize="none"
               value={password}
               onChangeText={text => setPassword(text)}
+              secureTextEntry={showPassword}
             />
-          </AreaInput>
+            <TouchableOpacity onPress={handleToggle}>
+              {showPassword ? (
+                <Feather name="eye" size={24} color="#606061" />
+              ) : (
+                <Feather name="eye-off" size={24} color="#606061" />
+              )}
+            </TouchableOpacity>
+          </PasswordInput>
 
           <SubmitButton onPress={handleLogin}>
             {loadingReq ? (
