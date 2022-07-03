@@ -1,30 +1,44 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import { format } from "date-fns";
 import { useContext, useEffect, useState } from "react";
 import {
   Alert,
   Keyboard,
   ToastAndroid,
+  TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native";
+import DatePicker from "../../components/DatePicker";
 import HistoryList from "../../components/HistoryList";
 import Loading from "../../components/Loading";
 import NewTransaction from "../../components/NewTransaction";
 import { AuthContext } from "../../contexts/auth";
 import firebase from "../../services/firebaseConnection";
-import { Container, Empty, Header, List, Name, Saldo, Title } from "./styles";
+import {
+  Area,
+  Container,
+  Empty,
+  Header,
+  List,
+  Name,
+  Saldo,
+  Title,
+} from "./styles";
 
 export default function Home() {
   const { user } = useContext(AuthContext);
   const [history, setHistory] = useState([]);
   const [saldo, setSaldo] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [newDate, setNewDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
 
   const uid = user?.uid;
 
   useEffect(() => {
-    async function loadList() {
+    function loadList() {
       try {
-        await firebase
+        firebase
           .database()
           .ref("users")
           .child(uid)
@@ -32,12 +46,12 @@ export default function Home() {
             setSaldo(snapshot.val().saldo);
           });
 
-        await firebase
+        firebase
           .database()
           .ref("historico")
           .child(uid)
           .orderByChild("date")
-          .equalTo(format(new Date(), "dd/MM/yyyy"))
+          .equalTo(format(newDate, "dd/MM/yyyy"))
           // .limitToLast(10)
           .on("value", snapshot => {
             setLoading(false);
@@ -63,7 +77,7 @@ export default function Home() {
     }
 
     loadList();
-  }, []);
+  }, [newDate]);
 
   const HandleEmpty = () => {
     return <Empty>"Boas memórias não tem preço!"</Empty>;
@@ -107,6 +121,15 @@ export default function Home() {
       });
   }
 
+  function handleShowPicker() {
+    setShowPicker(true);
+  }
+
+  function onChangeDatePicker(date) {
+    setShowPicker(Platform.OS === "ios");
+    setNewDate(date);
+  }
+
   return (
     <Container>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -116,7 +139,12 @@ export default function Home() {
 
           <NewTransaction />
 
-          <Title>Últimas movimentações</Title>
+          <Area>
+            <Title>Últimas movimentações</Title>
+            <TouchableOpacity onPress={handleShowPicker}>
+              <MaterialIcons name="date-range" size={24} color="white" />
+            </TouchableOpacity>
+          </Area>
         </Header>
       </TouchableWithoutFeedback>
 
@@ -130,6 +158,14 @@ export default function Home() {
           renderItem={({ item }) => (
             <HistoryList data={item} deleteItem={handleDelete} />
           )}
+        />
+      )}
+
+      {showPicker && (
+        <DatePicker
+          date={newDate}
+          onClose={() => setShowPicker(false)}
+          onChangeDate={onChangeDatePicker}
         />
       )}
     </Container>
