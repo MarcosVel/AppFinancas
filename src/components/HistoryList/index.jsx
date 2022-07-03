@@ -1,9 +1,10 @@
 import { Feather } from "@expo/vector-icons";
-import { Container, Transaction, Type, TypeText, Value } from "./styles";
+import { format } from "date-fns";
+import { Container, Time, Transaction, Type, TypeText, Value } from "./styles";
 
-const HistoryList = ({ data }) => {
+const HistoryList = ({ data, deleteItem }) => {
   return (
-    <Container>
+    <Container activeOpacity={0.5} onLongPress={() => deleteItem(data)}>
       <Transaction>
         <Type type={data.tipo}>
           <Feather
@@ -13,6 +14,9 @@ const HistoryList = ({ data }) => {
           />
           <TypeText>{data.tipo}</TypeText>
         </Type>
+        <Time>
+          {data.date} - {data.hour}
+        </Time>
       </Transaction>
       <Value>€ {data.valor}</Value>
     </Container>

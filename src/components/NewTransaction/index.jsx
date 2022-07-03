@@ -39,7 +39,8 @@ const NewTransaction = () => {
         .set({
           tipo: type,
           valor: parseFloat(valor),
-          date: format(new Date(), "dd/MM/yy"),
+          date: format(new Date(), "dd/MM/yyyy"),
+          hour: format(new Date(), "hh:mm"),
         });
 
       // Update saldo
