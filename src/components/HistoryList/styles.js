@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { COLORS } from "../../../styles";
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
   padding: 16px 16px 8px;
   background-color: ${COLORS.blackFive};
   border-radius: 8px;
@@ -10,6 +10,7 @@ export const Container = styled.View`
 
 export const Transaction = styled.View`
   flex-direction: row;
+  justify-content: space-between;
 `;
 
 export const Type = styled.View`
@@ -26,6 +27,10 @@ export const TypeText = styled.Text`
   font-size: 16px;
   line-height: 20px;
   margin-left: 8px;
+`;
+
+export const Time = styled.Text`
+  color: ${COLORS.placeholder};
 `;
 
 export const Value = styled.Text`

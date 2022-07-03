@@ -1,6 +1,11 @@
 import { format } from "date-fns";
 import { useContext, useEffect, useState } from "react";
-import { Keyboard, ToastAndroid, TouchableWithoutFeedback } from "react-native";
+import {
+  Alert,
+  Keyboard,
+  ToastAndroid,
+  TouchableWithoutFeedback,
+} from "react-native";
 import HistoryList from "../../components/HistoryList";
 import Loading from "../../components/Loading";
 import NewTransaction from "../../components/NewTransaction";
@@ -32,8 +37,8 @@ export default function Home() {
           .ref("historico")
           .child(uid)
           .orderByChild("date")
-          .equalTo(format(new Date(), "dd/MM/yy"))
-          .limitToLast(10)
+          .equalTo(format(new Date(), "dd/MM/yyyy"))
+          // .limitToLast(10)
           .on("value", snapshot => {
             setLoading(false);
             setHistory([]);
@@ -43,12 +48,15 @@ export default function Home() {
                 key: childItem.key,
                 tipo: childItem.val().tipo,
                 valor: childItem.val().valor,
+                date: childItem.val().date,
+                hour: childItem.val().hour,
               };
 
               setHistory(oldArray => [...oldArray, list]);
             });
           });
       } catch (e) {
+        setLoading(false);
         ToastAndroid.show("Erro ao carregar transações", ToastAndroid.SHORT);
         console.log(e);
       }
@@ -60,6 +68,44 @@ export default function Home() {
   const HandleEmpty = () => {
     return <Empty>"Boas memórias não tem preço!"</Empty>;
   };
+
+  function handleDelete(data) {
+    Alert.alert(
+      "Atenção",
+      `Deseja excluir a ${data.tipo} no valor de €${data.valor}`,
+      [
+        { text: "Cancelar", style: "cancel" },
+        { text: "Excluir", onPress: () => handleDeleteItem(data) },
+      ]
+    );
+  }
+
+  async function handleDeleteItem(data) {
+    await firebase
+      .database()
+      .ref("historico")
+      .child(uid)
+      .child(data.key)
+      .remove()
+      .then(async () => {
+        let saldoAtual = saldo;
+
+        data.tipo === "despesa"
+          ? (saldoAtual += parseFloat(data.valor))
+          : (saldoAtual -= parseFloat(data.valor));
+
+        await firebase
+          .database()
+          .ref("users")
+          .child(uid)
+          .child("saldo")
+          .set(saldoAtual);
+      })
+      .catch(err => {
+        ToastAndroid.show("Erro ao atualizar saldo", ToastAndroid.SHORT);
+        console.log(err);
+      });
+  }
 
   return (
     <Container>
@@ -81,7 +127,9 @@ export default function Home() {
           data={history}
           ListEmptyComponent={HandleEmpty}
           keyExtrator={item => item.key}
-          renderItem={({ item }) => <HistoryList data={item} />}
+          renderItem={({ item }) => (
+            <HistoryList data={item} deleteItem={handleDelete} />
+          )}
         />
       )}
     </Container>
