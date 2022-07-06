@@ -30,6 +30,13 @@ export const Saldo = styled.Text`
   margin-bottom: 12px;
 `;
 
+export const Area = styled.View`
+  /* margin-top: 8px; */
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+`;
+
 export const Title = styled.Text`
   color: ${COLORS.green};
   margin-bottom: 12px;
