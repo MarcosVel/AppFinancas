@@ -1,10 +1,10 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import { COLORS } from '../../styles';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const AuthStack = createStackNavigator();
+const AuthStack = createNativeStackNavigator();
 
 function AuthRoutes() {
   return (
